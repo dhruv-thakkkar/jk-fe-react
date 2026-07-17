@@ -1,0 +1,37 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import type { Destination } from '@/types/api';
+import { placeholderImage } from '@/lib/placeholder-image';
+import { WishlistButton } from './WishlistButton';
+
+export function DestinationCard({ destination }: { destination: Destination }) {
+  const displayName = destination.stateRegion
+    ? `${destination.name}, ${destination.stateRegion}`
+    : destination.name;
+
+  return (
+    <Link
+      className="card text-decoration-none position-relative overflow-hidden h-100"
+      href={`/destinations/${destination.slug}`}
+    >
+      <div className="ratio ratio-4x3">
+        <Image
+          className="object-fit-cover"
+          src={placeholderImage(destination.slug, 400, 300)}
+          alt={displayName}
+          fill
+          loading="lazy"
+          sizes="(min-width: 992px) 20vw, (min-width: 768px) 33vw, 50vw"
+        />
+      </div>
+      <WishlistButton
+        className="btn btn-icon btn-light rounded-circle position-absolute top-0 end-0 m-2 z-2"
+        label={`Save ${destination.name} to wishlist`}
+      />
+      <div className="position-absolute bottom-0 start-0 w-100 p-3 text-white img-overlay-scrim">
+        <h3 className="fs-6 mb-0 text-white">{displayName}</h3>
+        <span className="small">{destination.country}</span>
+      </div>
+    </Link>
+  );
+}

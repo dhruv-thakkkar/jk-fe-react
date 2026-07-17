@@ -1,0 +1,135 @@
+// Travelora identity, re-expressed as Bootstrap 5.3 Sass variable overrides.
+// Import order matters: functions -> variable overrides -> the rest of Bootstrap.
+// See https://getbootstrap.com/docs/5.3/customize/sass/#importing
+
+// 1. Functions first (needed by the overrides below)
+@import 'bootstrap/scss/functions';
+
+// 2. Our overrides of Bootstrap's default variables
+$primary: #2563eb;
+$secondary: #fb923c;
+$success: #16a34a;
+$info: #0ea5e9;
+$warning: #f59e0b;
+$danger: #ef4444;
+$light: #f8fafc;
+$dark: #0f172a;
+
+$body-color: #475569;
+$body-bg: #ffffff;
+$headings-color: #0f172a;
+$border-color: #e2e8f0;
+
+// next/font sets --font-body / --font-heading as CSS custom properties on
+// <html> in RootLayout — reference them here rather than duplicating the
+// Google Fonts stack, so Next keeps self-hosting/optimizing the font files.
+$font-family-base:
+  var(--font-body),
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$headings-font-family:
+  var(--font-heading),
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$headings-font-weight: 600;
+
+$border-radius: 0.625rem; // 10px
+$border-radius-sm: 0.375rem; // 6px
+$border-radius-lg: 1rem; // 16px
+$border-radius-xl: 1.5rem; // 24px
+$border-radius-2xl: 1.5rem;
+
+$link-color: $primary;
+$link-hover-color: #1d4ed8;
+
+$enable-negative-margins: true;
+
+// Extends Bootstrap's default 0-5 spacer scale with the wider steps our
+// section/hero spacing needs (py-16, mt-24, ...), on the same 4px rhythm
+// the original design used. Every mt-*/mb-*/p-*/gap-* utility below is
+// generated from this map, so e.g. "mt-8" == 32px throughout the app.
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: 0.25rem,
+  // 4px
+  2: 0.5rem,
+  // 8px
+  3: 0.75rem,
+  // 12px
+  4: 1rem,
+  // 16px
+  5: 1.25rem,
+  // 20px
+  6: 1.5rem,
+  // 24px
+  8: 2rem,
+  // 32px
+  10: 2.5rem,
+  // 40px
+  12: 3rem,
+  // 48px
+  16: 4rem,
+  // 64px
+  20: 5rem,
+  // 80px
+  24: 6rem,
+  // 96px
+);
+
+// 3. The rest of Bootstrap, built on the overrides above.
+//
+// This is bootstrap.scss's own import list, inlined here (skipping only its
+// first line — a console banner, no styling) rather than doing
+// `@import 'bootstrap/scss/bootstrap'` directly. Turbopack's Sass loader
+// loses directory context for imports *nested inside* an already-resolved
+// package file (bootstrap.scss's own `@import "mixins/banner"` fails to
+// resolve), but every import listed directly in *this* file resolves fine
+// via the same node_modules load path our own `@import` above already uses.
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/type';
+@import 'bootstrap/scss/images';
+@import 'bootstrap/scss/containers';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/tables';
+@import 'bootstrap/scss/forms';
+@import 'bootstrap/scss/buttons';
+
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/button-group';
+@import 'bootstrap/scss/nav';
+@import 'bootstrap/scss/navbar';
+@import 'bootstrap/scss/card';
+@import 'bootstrap/scss/accordion';
+@import 'bootstrap/scss/breadcrumb';
+@import 'bootstrap/scss/pagination';
+@import 'bootstrap/scss/badge';
+@import 'bootstrap/scss/alert';
+@import 'bootstrap/scss/progress';
+@import 'bootstrap/scss/list-group';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/toasts';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/tooltip';
+@import 'bootstrap/scss/popover';
+@import 'bootstrap/scss/carousel';
+@import 'bootstrap/scss/spinners';
+@import 'bootstrap/scss/offcanvas';
+@import 'bootstrap/scss/placeholders';
+
+@import 'bootstrap/scss/helpers';
+@import 'bootstrap/scss/utilities/api';
