@@ -13,6 +13,8 @@ export interface Category {
   id: string;
   companyId: string;
   name: string;
+  imageUrl: string | null;
+  isFeatured: boolean;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -24,6 +26,7 @@ export interface Destination {
   slug: string;
   country: string;
   stateRegion: string | null;
+  imageUrl: string | null;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;

@@ -92,6 +92,11 @@
   transform: translateY(0);
 }
 
+/* Hides the scrollbar on horizontally-scrolling card rows — Bootstrap has no utility for this. */
+.scroll-track::-webkit-scrollbar {
+  display: none;
+}
+
 /* White-on-dark breadcrumb variant for hero banners (Bootstrap's breadcrumb assumes a light background). */
 .breadcrumb-light .breadcrumb-item,
 .breadcrumb-light .breadcrumb-item a {

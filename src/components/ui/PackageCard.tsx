@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { PackageListItem } from '@/types/api';
-import { placeholderImage } from '@/lib/placeholder-image';
+import { ImagePlaceholder } from './ImagePlaceholder';
 import { formatDuration, formatPrice } from '@/lib/format';
 import { Icon } from '../icons/Icon';
 import { WishlistButton } from './WishlistButton';
@@ -17,8 +17,7 @@ export function PackageCard({
   currency: string;
 }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const fallbackImage = placeholderImage(pkg.slug, 400, 300);
-  const coverImage = imageFailed ? fallbackImage : (pkg.images[0]?.imageUrl ?? fallbackImage);
+  const cover = pkg.images[0];
 
   return (
     <article className="card h-100">
@@ -31,19 +30,23 @@ export function PackageCard({
             Featured
           </span>
         )}
-        <WishlistButton
+        {/* <WishlistButton
           className="btn btn-icon btn-light rounded-circle position-absolute top-0 end-0 m-2 z-2"
           label={`Save ${pkg.title} to wishlist`}
-        />
-        <Image
-          className="card-img-top object-fit-cover"
-          src={coverImage}
-          alt={pkg.images[0]?.altText ?? pkg.title}
-          fill
-          loading="lazy"
-          sizes="(min-width: 992px) 25vw, (min-width: 576px) 50vw, 100vw"
-          onError={() => setImageFailed(true)}
-        />
+        /> */}
+        {cover && !imageFailed ? (
+          <Image
+            className="card-img-top object-fit-cover"
+            src={cover.imageUrl}
+            alt={cover.altText ?? pkg.title}
+            fill
+            loading="lazy"
+            sizes="(min-width: 992px) 25vw, (min-width: 576px) 50vw, 100vw"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <ImagePlaceholder label={cover?.altText ?? pkg.title} className="position-absolute top-0 start-0" />
+        )}
       </div>
       <div className="card-body d-flex flex-column">
         {pkg.category && <span className="text-primary small fw-semibold mb-1">{pkg.category.name}</span>}

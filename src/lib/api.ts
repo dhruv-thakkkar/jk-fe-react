@@ -45,8 +45,10 @@ export function getCompanyInfo(): Promise<CompanyPublicInfo> {
   return publicGet<CompanyPublicInfo>('');
 }
 
-export function listCategories(): Promise<Category[]> {
-  return publicGet<Category[]>('/categories');
+export function listCategories(query: { isFeatured?: boolean } = {}): Promise<Category[]> {
+  const params: Record<string, string> = {};
+  if (query.isFeatured !== undefined) params.isFeatured = String(query.isFeatured);
+  return publicGet<Category[]>('/categories', params);
 }
 
 export function listDestinations(): Promise<Destination[]> {

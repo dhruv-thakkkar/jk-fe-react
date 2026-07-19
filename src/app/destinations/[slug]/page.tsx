@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCompanyInfo, getDestinationBySlug, listPackages } from '@/lib/api';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { PackageCard } from '@/components/ui/PackageCard';
-import { placeholderImage } from '@/lib/placeholder-image';
+import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder';
 
 type Params = { slug: string };
 
@@ -45,14 +44,7 @@ export default async function DestinationDetailPage({ params }: { params: Promis
     <>
       <section className="position-relative overflow-hidden" style={{ minHeight: 360 }}>
         <div className="position-absolute top-0 start-0 w-100 h-100">
-          <Image
-            src={placeholderImage(destination.slug, 1600, 500)}
-            alt={displayName}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
-          />
+          <ImagePlaceholder label={displayName} />
           <div className="position-absolute top-0 start-0 w-100 h-100 img-overlay-scrim" />
         </div>
         <div

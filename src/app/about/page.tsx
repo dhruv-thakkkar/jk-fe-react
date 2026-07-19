@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { getCompanyInfo, listDestinations, listPackages } from '@/lib/api';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { FeatureItem } from '@/components/ui/FeatureItem';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { placeholderImage } from '@/lib/placeholder-image';
+import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder';
 
 export const metadata: Metadata = {
   title: 'About Us',
@@ -35,14 +34,7 @@ export default async function AboutPage() {
     <>
       <section className="position-relative overflow-hidden" style={{ minHeight: 360 }}>
         <div className="position-absolute top-0 start-0 w-100 h-100">
-          <Image
-            src={placeholderImage('about-hero', 1600, 500)}
-            alt={`${company.name} team planning a trip`}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
-          />
+          <ImagePlaceholder label={`${company.name} team planning a trip`} />
           <div className="position-absolute top-0 start-0 w-100 h-100 img-overlay-scrim" />
         </div>
         <div
@@ -76,14 +68,9 @@ export default async function AboutPage() {
             </p>
           </div>
           <div className="col-12 col-lg-6">
-            <Image
-              className="rounded-3 object-fit-cover w-100 h-auto"
-              src={placeholderImage('about-story', 700, 500)}
-              alt={`${company.name} planning a trip`}
-              loading="lazy"
-              width={700}
-              height={500}
-            />
+            <div className="rounded-3 overflow-hidden" style={{ height: 500 }}>
+              <ImagePlaceholder label={`${company.name} planning a trip`} />
+            </div>
           </div>
         </div>
       </div>

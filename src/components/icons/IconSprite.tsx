@@ -88,6 +88,9 @@ export function IconSprite() {
         <symbol id="icon-credit-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2.5" y="5.5" width="19" height="13" rx="2" /><line x1="2.5" y1="10" x2="21.5" y2="10" /><line x1="5.5" y1="15" x2="9.5" y2="15" />
         </symbol>
+        <symbol id="icon-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2.5" y="3.5" width="19" height="17" rx="2" /><circle cx="8.5" cy="9" r="1.5" /><path d="m3 17 5-5 4 4 3-3 6 6" />
+        </symbol>
         <symbol id="icon-quote" viewBox="0 0 24 24" fill="currentColor" stroke="none">
           <path d="M9.5 6C6.5 7 4.5 9.7 4.5 13c0 2.5 1.6 4.3 3.6 4.3 1.7 0 3-1.3 3-3 0-1.6-1.1-2.8-2.6-3 .2-1.6 1.4-3 3-3.6L9.5 6Zm9 0C15.5 7 13.5 9.7 13.5 13c0 2.5 1.6 4.3 3.6 4.3 1.7 0 3-1.3 3-3 0-1.6-1.1-2.8-2.6-3 .2-1.6 1.4-3 3-3.6L18.5 6Z" />
         </symbol>
