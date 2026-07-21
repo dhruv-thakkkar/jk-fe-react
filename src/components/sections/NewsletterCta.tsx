@@ -2,7 +2,7 @@ import { NewsletterForm } from '../ui/NewsletterForm';
 
 export function NewsletterCta({ companyName }: { companyName: string }) {
   return (
-    <section className="py-16">
+    <section className="py-16 bg-light">
       <div className="container">
         <div className="card bg-primary text-white p-5">
           <div className="row align-items-center g-4">

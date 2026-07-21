@@ -9,6 +9,18 @@ export interface CompanyPublicInfo {
   currency: string;
 }
 
+export interface Banner {
+  id: string;
+  companyId: string;
+  imageUrl: string;
+  title: string | null;
+  linkUrl: string | null;
+  displayOrder: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Category {
   id: string;
   companyId: string;

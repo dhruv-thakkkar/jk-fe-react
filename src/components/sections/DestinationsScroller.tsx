@@ -11,7 +11,7 @@ export async function DestinationsScroller() {
   }
 
   return (
-    <section className="py-16 bg-light">
+    <section className="py-16">
       <div className="container">
         <SectionHeader eyebrow="Where to next" title="Popular Destinations" subtitle="Explore the places our travelers love most" />
         <HorizontalScroller>

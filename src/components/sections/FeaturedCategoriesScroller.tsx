@@ -11,9 +11,9 @@ export async function FeaturedCategoriesScroller() {
   }
 
   return (
-    <section className="py-16">
+    <section className="py-16 bg-light">
       <div className="container">
-        <SectionHeader eyebrow="Browse by theme" title="Featured Categories" subtitle="Find a holiday style that fits you" />
+        <SectionHeader eyebrow="Browse by categories" title="Featured Categories" subtitle="Find a holiday style that fits you" />
         <HorizontalScroller>
           {categories.map((category) => (
             <ScrollCard

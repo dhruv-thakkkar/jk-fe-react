@@ -1,0 +1,305 @@
+/**
+ * Header nav — underline-slide primary links plus a large square mega
+ * dropdown for Packages / Destinations. Hover-triggered on desktop
+ * (>=992px), tap-to-expand accordion on mobile/tablet.
+ *
+ * The desktop panel is anchored to the <header> (a positioned sticky element),
+ * not to its trigger, and centered in the viewport — so a left-hand trigger
+ * can never push the box off the left edge.
+ */
+
+.nav-a {
+  background: #fff;
+}
+.nav-a .nav-link,
+.nav-a .nav-mega-trigger {
+  color: var(--bs-body-color);
+  font-weight: 500;
+  position: relative;
+}
+.nav-a .nav-link:hover,
+.nav-a .nav-link.active {
+  color: var(--bs-primary);
+}
+/* Below 992px the trigger has no hover, so the open (tap) state needs its own active look. */
+@media (max-width: 991.98px) {
+  .nav-a .nav-mega-item.is-open > .nav-mega-trigger {
+    color: var(--bs-primary);
+  }
+}
+@media (min-width: 992px) {
+  /* Keep every primary item vertically centered against the brand. */
+  .nav-a .navbar-nav {
+    align-items: center;
+  }
+  .nav-a .nav-link::after,
+  .nav-a .nav-mega-trigger::after {
+    content: '';
+    position: absolute;
+    left: var(--bs-navbar-nav-link-padding-x, 0.5rem);
+    right: var(--bs-navbar-nav-link-padding-x, 0.5rem);
+    bottom: 2px;
+    height: 2px;
+    background: var(--bs-primary);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 180ms ease;
+  }
+  .nav-a .nav-link:hover::after,
+  .nav-a .nav-link.active::after,
+  .nav-a .nav-mega-item:hover > .nav-mega-trigger::after {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------------- Mega dropdown mechanics ---------------- */
+.nav-mega-item {
+  position: relative;
+}
+/* The trigger is a <button> that must read exactly like a Bootstrap .nav-link,
+   so it inherits that padding/line-height rather than overriding it. */
+.nav-mega-trigger {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-mega-trigger .icon {
+  transition: transform 150ms ease;
+}
+/* Below 992px there's no hover, so the icon flip has to come from the tap (is-open) state. */
+@media (max-width: 991.98px) {
+  .nav-mega-item.is-open .nav-mega-trigger .icon {
+    transform: rotate(180deg);
+  }
+}
+
+.nav-mega-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 250ms ease;
+}
+.nav-mega-item.is-open .nav-mega-panel {
+  max-height: 2000px;
+}
+
+@media (min-width: 992px) {
+  /* Anchor the panel to the header, not the item, and center it in the
+     viewport so a left-aligned trigger can't overflow off-screen. */
+  .nav-mega-item {
+    position: static;
+  }
+  .nav-mega-item:hover .nav-mega-trigger .icon,
+  .nav-mega-item:focus-within .nav-mega-trigger .icon {
+    transform: rotate(180deg);
+  }
+
+  .nav-mega-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: #fff;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: 0 28px 56px -16px rgba(15, 23, 42, 0.22);
+    z-index: 1050;
+    max-height: none;
+    overflow: visible;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 160ms ease;
+  }
+  .nav-mega-item:hover .nav-mega-panel,
+  .nav-mega-item:focus-within .nav-mega-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* After a tile/link click navigates without a mouse move, :hover is still true —
+     force-closed overrides it until the mouse actually leaves the item. */
+  .nav-mega-item.force-closed .nav-mega-panel {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Large square showcase panel.
+   Padding lives on .nav-mega-panel-inner, NOT on .nav-mega-panel itself:
+   .nav-mega-panel is the element the mobile accordion collapses via
+   max-height:0, and with box-sizing:border-box a box can never shrink
+   below its own padding — padding on the clipped element always renders
+   as a visible sliver even at max-height:0. Padding on a child, fully
+   inside the 0-height clipped parent, disappears completely instead. */
+.nav-mega-panel-inner {
+  padding: 1.5rem;
+}
+@media (min-width: 992px) {
+  .nav-mega-panel-lg {
+    width: min(60rem, calc(100vw - 2rem));
+  }
+}
+
+.nav-mega-panel-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: -0.25rem;
+  padding: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bs-border-color) transparent;
+}
+.nav-mega-panel-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.nav-mega-panel-scroll::-webkit-scrollbar-thumb {
+  background: var(--bs-border-color);
+  border-radius: 999px;
+}
+@media (min-width: 992px) {
+  .nav-mega-panel-scroll {
+    max-height: min(28rem, calc(100vh - 160px));
+  }
+}
+
+/* Phone: single-column list of rows. Tablet: two columns of rows.
+   Desktop (>=992): four columns of square image cards. */
+.nav-mega-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+}
+@media (min-width: 576px) {
+  .nav-mega-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.75rem;
+  }
+}
+@media (min-width: 992px) {
+  .nav-mega-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+.nav-mega-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--bs-border-radius);
+  padding: 0.375rem;
+  transition:
+    background 150ms ease,
+    transform 150ms ease;
+}
+.nav-mega-tile:hover {
+  background: var(--bs-tertiary-bg, #f8fafc);
+  transform: translateY(-2px);
+}
+.nav-mega-tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.nav-mega-tile-media {
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--bs-border-radius);
+  overflow: hidden;
+  background: var(--bs-tertiary-bg, #f1f5f9);
+}
+.nav-mega-tile-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 300ms ease;
+}
+.nav-mega-tile:hover .nav-mega-tile-media img {
+  transform: scale(1.05);
+}
+.nav-mega-tile-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--bs-dark);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nav-mega-tile:hover .nav-mega-tile-title {
+  color: var(--bs-primary);
+}
+.nav-mega-tile-meta {
+  font-size: 0.6875rem;
+  color: var(--bs-secondary-color, #94a3b8);
+  font-variant-numeric: tabular-nums;
+}
+
+.nav-mega-viewall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--bs-border-color);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--bs-primary);
+  text-decoration: none;
+}
+.nav-mega-viewall:hover {
+  color: var(--bs-primary-text-emphasis, var(--bs-primary));
+}
+.nav-mega-viewall:hover .icon {
+  transform: translateX(3px);
+}
+.nav-mega-viewall .icon {
+  transition: transform 150ms ease;
+}
+
+/* Mobile / tablet: the desktop mega-menu image grid becomes a compact,
+   scannable list of tappable rows (small thumb + title/meta), which is the
+   right pattern inside a hamburger drawer — big tap targets, no cramped
+   squares, easy to skim. */
+@media (max-width: 991.98px) {
+  .nav-mega-panel-inner {
+    padding: 0.5rem 0.25rem 0.75rem;
+  }
+  .nav-mega-panel-scroll {
+    max-height: min(65vh, 460px);
+  }
+  .nav-mega-tile {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.5rem;
+    min-height: 60px;
+  }
+  .nav-mega-tile:hover {
+    transform: none;
+  }
+  .nav-mega-tile:active {
+    background: var(--bs-tertiary-bg, #f8fafc);
+  }
+  .nav-mega-tile-media {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    aspect-ratio: auto;
+  }
+  .nav-mega-tile-title {
+    -webkit-line-clamp: 2;
+  }
+}

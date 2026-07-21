@@ -7,6 +7,7 @@ import { PackageGallery } from '@/components/ui/PackageGallery';
 import { WishlistButton } from '@/components/ui/WishlistButton';
 import { Icon } from '@/components/icons/Icon';
 import { formatDuration, formatPrice } from '@/lib/format';
+import { sanitizeRichText } from '@/lib/sanitize';
 
 type Params = { slug: string };
 
@@ -74,11 +75,17 @@ export default async function PackageDetailPage({ params }: { params: Promise<Pa
 
             <div className="mt-8">
               <h2 className="fs-4">Overview</h2>
-              <p className="mt-3">
-                {pkg.description ??
-                  pkg.shortDescription ??
-                  `Experience ${pkg.title}, a ${formatDuration(pkg.durationDays, pkg.durationNights)} package crafted by ${company.name}.`}
-              </p>
+              {pkg.description ? (
+                <div
+                  className="rich-text mt-3"
+                  dangerouslySetInnerHTML={{ __html: sanitizeRichText(pkg.description) }}
+                />
+              ) : (
+                <p className="mt-3">
+                  {pkg.shortDescription ??
+                    `Experience ${pkg.title}, a ${formatDuration(pkg.durationDays, pkg.durationNights)} package crafted by ${company.name}.`}
+                </p>
+              )}
 
               {hasDestinations && (
                 <>
@@ -101,13 +108,30 @@ export default async function PackageDetailPage({ params }: { params: Promise<Pa
             {hasItinerary && (
               <div className="mt-8">
                 <h2 className="fs-4">Itinerary</h2>
-                <div className="d-flex flex-column gap-3 mt-3">
-                  {pkg.itinerary.map((day) => (
-                    <div key={day.id} className="card p-4">
-                      <h3 className="fs-6 mb-0">
-                        Day {day.dayNumber} — {day.title}
+                <div className="accordion mt-3" id="itinerary-accordion">
+                  {pkg.itinerary.map((day, index) => (
+                    <div key={day.id} className="accordion-item">
+                      <h3 className="accordion-header">
+                        <button
+                          type="button"
+                          className={`accordion-button${index === 0 ? '' : ' collapsed'}`}
+                          data-bs-toggle="collapse"
+                          data-bs-target={`#itinerary-day-${day.id}`}
+                          aria-expanded={index === 0}
+                          aria-controls={`itinerary-day-${day.id}`}
+                        >
+                          Day {day.dayNumber} — {day.title}
+                        </button>
                       </h3>
-                      {day.description && <p className="mt-2 mb-0">{day.description}</p>}
+                      <div
+                        id={`itinerary-day-${day.id}`}
+                        className={`accordion-collapse collapse${index === 0 ? ' show' : ''}`}
+                        data-bs-parent="#itinerary-accordion"
+                      >
+                        <div className="accordion-body">
+                          {day.description ?? 'No details provided for this day.'}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -145,7 +169,7 @@ export default async function PackageDetailPage({ params }: { params: Promise<Pa
           </div>
 
           <div className="col-12 col-lg-4">
-            <div className="card p-4 sticky-top" style={{ top: 'calc(1.5rem + 76px)' }}>
+            <div className="card p-4 sticky-top" style={{ top: 'calc(1.5rem + 76px)', zIndex: 1 }}>
               <div className="d-flex align-items-baseline gap-2">
                 <span className="fs-2 fw-bold">{formatPrice(pkg.priceAdult, company.currency)}</span>
                 <span className="text-muted">/ adult</span>

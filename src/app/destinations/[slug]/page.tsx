@@ -95,7 +95,7 @@ export default async function DestinationDetailPage({ params }: { params: Promis
           </div>
 
           <div className="col-12 col-lg-4">
-            <div className="card p-4 sticky-top" style={{ top: 'calc(1.5rem + 76px)' }}>
+            <div className="card p-4 sticky-top" style={{ top: 'calc(1.5rem + 76px)', zIndex: 1 }}>
               <h3 className="fs-6 mb-3">Destination Facts</h3>
               <dl className="row mb-0 small">
                 <dt className="col-6 text-muted fw-normal">Country</dt>

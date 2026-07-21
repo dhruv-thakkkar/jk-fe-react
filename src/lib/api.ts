@@ -1,5 +1,6 @@
 import { API_BASE_URL, COMPANY_SLUG } from './config';
 import type {
+  Banner,
   CompanyPublicInfo,
   Category,
   CreateEnquiryInput,
@@ -53,6 +54,10 @@ export function listCategories(query: { isFeatured?: boolean } = {}): Promise<Ca
 
 export function listDestinations(): Promise<Destination[]> {
   return publicGet<Destination[]>('/destinations');
+}
+
+export function listBanners(): Promise<Banner[]> {
+  return publicGet<Banner[]>('/banners');
 }
 
 export function listPackages(
