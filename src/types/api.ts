@@ -7,6 +7,17 @@ export interface CompanyPublicInfo {
   phone: string | null;
   country: string | null;
   currency: string;
+  tagline: string | null;
+  missionStatement: string | null;
+  storyText: string | null;
+  foundedYear: number | null;
+  logoUrl: string | null;
+  heroImageUrl: string | null;
+  addressLine: string | null;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
+  twitterUrl: string | null;
+  linkedinUrl: string | null;
 }
 
 export interface Banner {

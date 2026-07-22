@@ -5,6 +5,7 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { FeatureItem } from '@/components/ui/FeatureItem';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder';
+import { Icon } from '@/components/icons/Icon';
 
 export const metadata: Metadata = {
   title: 'About Us',
@@ -16,6 +17,20 @@ const VALUES = [
   { icon: 'headset', title: 'Real Support', text: 'Human support before, during and after your trip.' },
 ];
 
+const DEFAULT_TAGLINE = 'Turning trip ideas into unforgettable, worry-free journeys.';
+const DEFAULT_STORY =
+  "We're a team of travel planners who believe great trips start with honest pricing and " +
+  'local expertise. Every package we offer is put together by people who know the destination ' +
+  "well, so you get an itinerary worth doing, priced without surprises, and backed by support that " +
+  "sticks around after you've paid.";
+
+const SOCIAL_LINKS = (company: Awaited<ReturnType<typeof getCompanyInfo>>) =>
+  [
+    { href: company.facebookUrl, icon: 'facebook', label: 'Facebook' },
+    { href: company.instagramUrl, icon: 'instagram', label: 'Instagram' },
+    { href: company.twitterUrl, icon: 'twitter', label: 'Twitter' },
+  ].filter((link): link is { href: string; icon: string; label: string } => Boolean(link.href));
+
 export default async function AboutPage() {
   const [company, destinations, packages] = await Promise.all([
     getCompanyInfo(),
@@ -26,15 +41,31 @@ export default async function AboutPage() {
   const stats = [
     { value: String(packages.meta.total), label: 'Holiday Packages' },
     { value: String(destinations.length), label: 'Destinations' },
-    ...(company.country ? [{ value: company.country, label: 'Based In' }] : []),
+    ...(company.foundedYear
+      ? [{ value: String(new Date().getFullYear() - company.foundedYear), label: 'Years Experience' }]
+      : company.country
+        ? [{ value: company.country, label: 'Based In' }]
+        : []),
     { value: company.currency, label: 'Pricing Currency' },
   ];
+
+  const socialLinks = SOCIAL_LINKS(company);
 
   return (
     <>
       <section className="position-relative overflow-hidden" style={{ minHeight: 360 }}>
         <div className="position-absolute top-0 start-0 w-100 h-100">
-          <ImagePlaceholder label={`${company.name} team planning a trip`} />
+          {company.heroImageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={company.heroImageUrl}
+              alt={`${company.name} team planning a trip`}
+              className="w-100 h-100"
+              style={{ objectFit: 'cover' }}
+            />
+          ) : (
+            <ImagePlaceholder label={`${company.name} team planning a trip`} />
+          )}
           <div className="position-absolute top-0 start-0 w-100 h-100 img-overlay-scrim" />
         </div>
         <div
@@ -43,7 +74,7 @@ export default async function AboutPage() {
         >
           <Breadcrumbs light items={[{ label: 'Home', href: '/' }, { label: 'About Us' }]} />
           <h1 className="text-white mt-3">About {company.name}</h1>
-          <p className="text-white-50 mb-0">We turn trip ideas into unforgettable, worry-free journeys.</p>
+          <p className="text-white-50 mb-0">{company.tagline ?? DEFAULT_TAGLINE}</p>
         </div>
       </section>
 
@@ -62,10 +93,13 @@ export default async function AboutPage() {
               , putting together handpicked holiday packages so you can spend less time planning
               and more time exploring.
             </p>
-            <p className="mt-3">
-              We believe the best trips are planned with care, priced honestly, and backed by real
-              people who pick up the phone when something goes wrong.
-            </p>
+            <p className="mt-3">{company.storyText ?? DEFAULT_STORY}</p>
+            {company.missionStatement && (
+              <blockquote className="border-start border-primary border-3 ps-3 mt-4 mb-0 fst-italic text-muted">
+                <Icon name="quote" className="icon icon--sm text-primary mb-2" />
+                <p className="mb-0">{company.missionStatement}</p>
+              </blockquote>
+            )}
           </div>
           <div className="col-12 col-lg-6">
             <div className="rounded-3 overflow-hidden" style={{ height: 500 }}>
@@ -115,6 +149,34 @@ export default async function AboutPage() {
               Contact Us
             </Link>
           </div>
+          {(company.phone || company.addressLine || socialLinks.length > 0) && (
+            <div className="d-flex gap-4 justify-content-center flex-wrap mt-4 pt-4 border-top">
+              {company.phone && (
+                <span className="text-muted small d-inline-flex align-items-center gap-2">
+                  <Icon name="phone" className="icon icon--sm" />
+                  {company.phone}
+                </span>
+              )}
+              {company.addressLine && (
+                <span className="text-muted small d-inline-flex align-items-center gap-2">
+                  <Icon name="map-pin" className="icon icon--sm" />
+                  {company.addressLine}
+                </span>
+              )}
+              {socialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted d-inline-flex align-items-center gap-2"
+                  aria-label={link.label}
+                >
+                  <Icon name={link.icon} className="icon icon--sm" />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
