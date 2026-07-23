@@ -48,7 +48,7 @@ export interface Destination {
   name: string;
   slug: string;
   country: string;
-  stateRegion: string | null;
+  description: string | null;
   imageUrl: string | null;
   isActive: boolean;
   createdAt: string;

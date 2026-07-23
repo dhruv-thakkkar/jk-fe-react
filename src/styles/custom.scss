@@ -320,3 +320,51 @@
 .rich-text a {
   text-decoration: underline;
 }
+
+/* Destination detail page — a taller, more cinematic hero than the standard
+   inner-page banner (clamp scales it fluidly, no separate mobile breakpoint
+   needed), plus a glass stat bar that straddles the hero/content boundary. */
+.destination-hero {
+  min-height: clamp(320px, 60vh, 620px);
+}
+
+.destination-stat-bar {
+  position: relative;
+  z-index: 2;
+  margin-top: -3.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: var(--bs-border-radius-lg);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 16px 40px -12px rgba(var(--bs-primary-rgb), 0.35);
+}
+.destination-stat-bar__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  flex: 1 1 auto;
+}
+.destination-stat-bar__fact {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.destination-stat-bar__cta {
+  flex-shrink: 0;
+}
+@media (max-width: 575.98px) {
+  .destination-stat-bar {
+    margin-top: -2rem;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+  .destination-stat-bar__cta {
+    width: 100%;
+  }
+}
