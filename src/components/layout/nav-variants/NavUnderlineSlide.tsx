@@ -23,6 +23,10 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
   function closeAll() {
     closeMobileNav();
     setOpenMobile(null);
+  }
+
+  function closeMegaLink() {
+    closeAll();
     setForceClosed(true);
   }
 
@@ -98,7 +102,7 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
                         key={pkg.id}
                         href={`/packages/${pkg.slug}`}
                         className="nav-mega-tile"
-                        onClick={closeAll}
+                        onClick={closeMegaLink}
                       >
                         <span className="nav-mega-tile-media">
                           <img src={resolveImageUrl(pkg.images[0]?.imageUrl)} alt="" loading="lazy" />
@@ -114,7 +118,7 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
                     ))}
                   </div>
                 </div>
-                <Link href="/packages" className="nav-mega-viewall" onClick={closeAll}>
+                <Link href="/packages" className="nav-mega-viewall" onClick={closeMegaLink}>
                   View all {packages.length} packages <Icon name="arrow-right" className="icon icon--sm" />
                 </Link>
                </div>
@@ -145,7 +149,7 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
                         key={dest.id}
                         href={`/destinations/${dest.slug}`}
                         className="nav-mega-tile"
-                        onClick={closeAll}
+                        onClick={closeMegaLink}
                       >
                         <span className="nav-mega-tile-media">
                           <img src={resolveImageUrl(dest.imageUrl) ?? undefined} alt="" loading="lazy" />
@@ -158,7 +162,7 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
                     ))}
                   </div>
                 </div>
-                <Link href="/destinations" className="nav-mega-viewall" onClick={closeAll}>
+                <Link href="/destinations" className="nav-mega-viewall" onClick={closeMegaLink}>
                   View all {destinations.length} destinations <Icon name="arrow-right" className="icon icon--sm" />
                 </Link>
                </div>
