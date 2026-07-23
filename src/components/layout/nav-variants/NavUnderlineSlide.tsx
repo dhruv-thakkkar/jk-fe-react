@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/components/icons/Icon';
 import { formatDuration, formatPrice } from '@/lib/format';
+import { resolveImageUrl } from '@/lib/image-url';
 import type { NavVariantProps } from './types';
 
 async function closeMobileNav() {
@@ -100,7 +101,7 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
                         onClick={closeAll}
                       >
                         <span className="nav-mega-tile-media">
-                          <img src={pkg.images[0]?.imageUrl} alt="" loading="lazy" />
+                          <img src={resolveImageUrl(pkg.images[0]?.imageUrl)} alt="" loading="lazy" />
                         </span>
                         <span className="nav-mega-tile-body">
                           <span className="nav-mega-tile-title">{pkg.title}</span>
@@ -147,7 +148,7 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
                         onClick={closeAll}
                       >
                         <span className="nav-mega-tile-media">
-                          <img src={dest.imageUrl ?? undefined} alt="" loading="lazy" />
+                          <img src={resolveImageUrl(dest.imageUrl) ?? undefined} alt="" loading="lazy" />
                         </span>
                         <span className="nav-mega-tile-body">
                           <span className="nav-mega-tile-title">{dest.name}</span>

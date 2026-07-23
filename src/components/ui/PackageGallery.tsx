@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import type { PackageImage } from '@/types/api';
+import { resolveImageUrl } from '@/lib/image-url';
 import { ImagePlaceholder } from './ImagePlaceholder';
 
 export function PackageGallery({ images, title }: { images: PackageImage[]; title: string; slug: string }) {
@@ -24,7 +25,7 @@ export function PackageGallery({ images, title }: { images: PackageImage[]; titl
         {activeShowsImage ? (
           <Image
             className="object-fit-cover"
-            src={active.imageUrl}
+            src={resolveImageUrl(active.imageUrl)}
             alt={activeAlt}
             fill
             priority
@@ -54,7 +55,7 @@ export function PackageGallery({ images, title }: { images: PackageImage[]; titl
                 ) : (
                   <Image
                     className="object-fit-cover"
-                    src={image.imageUrl}
+                    src={resolveImageUrl(image.imageUrl)}
                     alt={image.altText ?? title}
                     fill
                     loading="lazy"

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { resolveImageUrl } from '@/lib/image-url';
 import { ImagePlaceholder } from './ImagePlaceholder';
 
 export function ScrollCard({
@@ -28,7 +29,7 @@ export function ScrollCard({
         {imageUrl && !imageFailed ? (
           <Image
             className="object-fit-cover"
-            src={imageUrl}
+            src={resolveImageUrl(imageUrl)}
             alt={title}
             fill
             loading="lazy"

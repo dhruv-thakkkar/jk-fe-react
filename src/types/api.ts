@@ -91,14 +91,6 @@ export interface PackageExclusion {
   createdAt: string;
 }
 
-export interface PackageDestinationLink {
-  id: string;
-  packageId: string;
-  destinationId: string;
-  displayOrder: number;
-  destination: Destination;
-}
-
 interface PackageCore {
   id: string;
   companyId: string;
@@ -133,7 +125,8 @@ export interface PackageDetail extends PackageCore {
   itinerary: PackageItineraryDay[];
   inclusions: PackageInclusion[];
   exclusions: PackageExclusion[];
-  destinations: PackageDestinationLink[];
+  destinationId: string | null;
+  destination: Destination | null;
 }
 
 export interface PaginationMeta {

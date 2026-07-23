@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCompanyInfo, listDestinations, listPackages } from '@/lib/api';
+import { resolveImageUrl } from '@/lib/image-url';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { FeatureItem } from '@/components/ui/FeatureItem';
 import { SectionHeader } from '@/components/ui/SectionHeader';
@@ -58,7 +59,7 @@ export default async function AboutPage() {
           {company.heroImageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={company.heroImageUrl}
+              src={resolveImageUrl(company.heroImageUrl)}
               alt={`${company.name} team planning a trip`}
               className="w-100 h-100"
               style={{ objectFit: 'cover' }}

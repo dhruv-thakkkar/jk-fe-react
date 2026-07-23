@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
       // approach for this "CMS with user-supplied image URLs" case.
       { protocol: "https", hostname: "**" },
       // admin-ui serves uploads over plain HTTP in local dev
-      // (localhost:3001); prod admin-ui is https and already covered above.
+      // (localhost:3002); prod admin-ui is https and already covered above.
       { protocol: "http", hostname: "localhost" },
     ],
   },

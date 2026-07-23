@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Destination } from '@/types/api';
+import { resolveImageUrl } from '@/lib/image-url';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import { WishlistButton } from './WishlistButton';
 
@@ -22,7 +23,7 @@ export function DestinationCard({ destination }: { destination: Destination }) {
         {destination.imageUrl && !imageFailed ? (
           <Image
             className="object-fit-cover"
-            src={destination.imageUrl}
+            src={resolveImageUrl(destination.imageUrl)}
             alt={displayName}
             fill
             loading="lazy"

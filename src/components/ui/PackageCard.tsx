@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { PackageListItem } from '@/types/api';
+import { resolveImageUrl } from '@/lib/image-url';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import { formatDuration, formatPrice } from '@/lib/format';
 import { Icon } from '../icons/Icon';
@@ -37,7 +38,7 @@ export function PackageCard({
         {cover && !imageFailed ? (
           <Image
             className="card-img-top object-fit-cover"
-            src={cover.imageUrl}
+            src={resolveImageUrl(cover.imageUrl)}
             alt={cover.altText ?? pkg.title}
             fill
             loading="lazy"

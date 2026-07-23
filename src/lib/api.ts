@@ -33,7 +33,10 @@ async function publicGet<T>(path: string, searchParams?: Record<string, string>)
     }
   }
 
-  const res = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
+  const res =
+    process.env.NODE_ENV === 'development'
+      ? await fetch(url, { cache: 'no-store' })
+      : await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
 
   if (!res.ok) {
     throw new ApiError(`GET ${url.pathname} failed with ${res.status}`, res.status);
