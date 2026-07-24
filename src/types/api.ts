@@ -12,6 +12,7 @@ export interface CompanyPublicInfo {
   storyText: string | null;
   foundedYear: number | null;
   logoUrl: string | null;
+  faviconUrl: string | null;
   heroImageUrl: string | null;
   addressLine: string | null;
   facebookUrl: string | null;

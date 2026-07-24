@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/components/icons/Icon';
+import { Logo } from '@/components/layout/Logo';
 import { formatDuration, formatPrice } from '@/lib/format';
 import { resolveImageUrl } from '@/lib/image-url';
 import type { NavVariantProps } from './types';
@@ -14,7 +15,7 @@ async function closeMobileNav() {
   if (el) Collapse.getInstance(el)?.hide();
 }
 
-export function NavUnderlineSlide({ companyName, packages, destinations, currency }: NavVariantProps) {
+export function NavUnderlineSlide({ companyName, logoUrl, packages, destinations, currency }: NavVariantProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [openMobile, setOpenMobile] = useState<'packages' | 'destinations' | null>(null);
   const [forceClosed, setForceClosed] = useState(false);
@@ -56,8 +57,18 @@ export function NavUnderlineSlide({ companyName, packages, destinations, currenc
       className={`navbar navbar-expand-lg nav-a border-bottom sticky-top py-3${isScrolled ? ' is-scrolled' : ''}`}
     >
       <div className="container">
-        <Link href="/" className="navbar-brand fw-bold" onClick={closeAll}>
-          {companyName}
+        <Link href="/" className="navbar-brand fw-bold d-flex align-items-center gap-2" onClick={closeAll}>
+          {logoUrl ? (
+            // Uploaded logo already carries the company name as a wordmark —
+            // rendering it alone avoids a redundant text label beside it.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={resolveImageUrl(logoUrl)} alt={companyName} style={{ height: 36, width: 'auto' }} />
+          ) : (
+            <>
+              <Logo size={36} />
+              {companyName}
+            </>
+          )}
         </Link>
 
         <button

@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { getCompanyInfo, listDestinations } from '@/lib/api';
 import { Icon } from '../icons/Icon';
+import { Logo } from './Logo';
 import { NewsletterForm } from '../ui/NewsletterForm';
+import { resolveImageUrl } from '@/lib/image-url';
 
 export async function Footer() {
   const [company, destinations] = await Promise.all([getCompanyInfo(), listDestinations()]);
@@ -12,8 +14,20 @@ export async function Footer() {
       <div className="container">
         <div className="row g-4">
           <div className="col-12 col-md-6 col-lg-4">
-            <Link href="/" className="navbar-brand text-white fw-bold d-inline-block mb-3">
-              {company.name}
+            <Link href="/" className="navbar-brand text-white fw-bold d-inline-flex align-items-center gap-2 mb-3">
+              {company.logoUrl ? (
+                <span className="bg-white rounded d-inline-flex align-items-center justify-content-center p-1">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={resolveImageUrl(company.logoUrl)} alt={company.name} style={{ height: 28, width: 'auto' }} />
+                </span>
+              ) : (
+                <>
+                  <span className="bg-white rounded-circle d-inline-flex align-items-center justify-content-center p-1">
+                    <Logo size={32} />
+                  </span>
+                  {company.name}
+                </>
+              )}
             </Link>
             <p className="mb-3" style={{ maxWidth: '32ch' }}>
               Your trusted travel partner. Explore the world with our best holiday packages.

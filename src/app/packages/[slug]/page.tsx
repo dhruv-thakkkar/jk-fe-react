@@ -125,7 +125,14 @@ export default async function PackageDetailPage({ params }: { params: Promise<Pa
                         data-bs-parent="#itinerary-accordion"
                       >
                         <div className="accordion-body">
-                          {day.description ?? 'No details provided for this day.'}
+                          {day.description ? (
+                            <div
+                              className="rich-text"
+                              dangerouslySetInnerHTML={{ __html: sanitizeRichText(day.description) }}
+                            />
+                          ) : (
+                            'No details provided for this day.'
+                          )}
                         </div>
                       </div>
                     </div>

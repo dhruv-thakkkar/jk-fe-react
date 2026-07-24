@@ -32,6 +32,11 @@ export async function generateMetadata(): Promise<Metadata> {
         template: `%s | ${company.name}`,
       },
       description: `${company.name} is your trusted travel partner. Book handpicked holiday packages worldwide with the best price guarantee.`,
+      // No faviconUrl uploaded → omit `icons` entirely so Next's file convention
+      // (src/app/icon.svg / favicon.ico) keeps serving as the fallback.
+      icons: company.faviconUrl
+        ? { icon: company.faviconUrl, apple: company.faviconUrl }
+        : undefined,
     };
   } catch {
     return { title: 'Site Unavailable' };
@@ -92,6 +97,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         </a>
         <Header
           companyName={company.name}
+          logoUrl={company.logoUrl}
           packages={navPackages}
           destinations={navDestinations}
           currency={company.currency}
